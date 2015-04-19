@@ -51,6 +51,7 @@ public class BinChatManager extends ChannelInitializer<Channel> {
         sendToAllBut(userConnection, new ConnectedClient(userConnection.getName()));
     }
 
+    @Override
     public void initChannel(Channel ch) throws Exception {
         UserConnection userConnection = new UserConnection(new ChannelWrapper(ch), this);
         ChannelPipeline pipeline = ch.pipeline();

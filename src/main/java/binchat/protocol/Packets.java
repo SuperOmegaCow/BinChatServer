@@ -40,7 +40,7 @@ public enum Packets {
         }
     };
 
-    public static final int MAX_PACKET_ID = 0;
+    public static final int MAX_PACKET_ID = 3;
 
     public final ProtocolData INBOUND = new ProtocolData();
     public final ProtocolData OUTBOUND = new ProtocolData();
