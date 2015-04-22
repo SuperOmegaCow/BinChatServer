@@ -15,20 +15,23 @@ import java.util.UUID;
 public class BinChatManager extends ChannelInitializer<Channel> {
 
     public static Database database = new Database("root", "binchat", "default", "3306", "localhost");
-    private Connection connection;
     private List<UserConnection> users = new ArrayList<UserConnection>();
 
     public BinChatManager() {
         try {
-            this.connection = database.openConnection();
+            database.openConnection();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    public List<UserConnection> getUsers() {
+        return users;
+    }
+
     public void sendToAllBut(UserConnection userConnection, DefinedPacket definedPacket) {
         for (UserConnection user : this.users) {
-            if (userConnection != user)
+            if (!userConnection.equals(user))
                 user.sendPacket(definedPacket);
         }
     }
@@ -58,7 +61,6 @@ public class BinChatManager extends ChannelInitializer<Channel> {
         pipeline.addLast("frame_decoder", new FrameDecoder());
         pipeline.addLast("packet_decoder", new Decoder(Packets.HANDSHAKE));
         pipeline.addLast("frame_encoder", new FieldPrepender());
-        pipeline.addLast("packet_decoder", new Encoder(Packets.LOGIN));
         pipeline.addLast("packet_handler", userConnection);
         this.addClient(userConnection);
     }

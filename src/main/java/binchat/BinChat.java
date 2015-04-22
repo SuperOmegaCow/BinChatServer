@@ -6,19 +6,9 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
-import javax.swing.*;
-
-public class BinChat extends JFrame {
-
-    public BinChat() {
-        this.setSize(800, 800);
-        this.setTitle("BinChat Server");
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setVisible(true);
-    }
+public class BinChat {
 
     public static void main(String[] args) {
-        BinChat binChat = new BinChat();
         BinChatManager binChatManager = new BinChatManager();
         EventLoopGroup group = new NioEventLoopGroup();
         try {
@@ -32,6 +22,10 @@ public class BinChat extends JFrame {
         } finally {
             group.shutdownGracefully();
         }
+    }
+
+    public static void log(String message) {
+        System.out.println(message);
     }
 
 }

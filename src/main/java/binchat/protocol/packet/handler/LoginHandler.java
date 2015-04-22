@@ -4,6 +4,7 @@ import binchat.logic.BinChatManager;
 import binchat.logic.State;
 import binchat.logic.UserConnection;
 import binchat.protocol.AbstractPacketHandler;
+import binchat.protocol.packet.chat.ConnectedClient;
 import binchat.protocol.packet.login.LoginStart;
 import binchat.protocol.packet.login.PasswordRequest;
 import binchat.protocol.packet.login.PasswordResponse;
@@ -35,7 +36,11 @@ public class LoginHandler extends AbstractPacketHandler {
         this.getUserConnection().setState(State.CHAT);
         this.getUserConnection().setAdmin(BinChatManager.database.isAdmin(this.getUserConnection().getName()));
         this.getBinChatManager().clientConnected(this.getUserConnection());
-        this.getBinChatManager().clientConnected(this.getUserConnection());
+        for(UserConnection userConnection : this.getBinChatManager().getUsers()) {
+            if(!userConnection.equals(this.getUserConnection())) {
+               this.getUserConnection().sendPacket(new ConnectedClient(userConnection.getName()));
+            }
+        }
     }
 
 
