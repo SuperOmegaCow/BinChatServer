@@ -7,10 +7,8 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class BinChatManager extends ChannelInitializer<Channel> {
 
@@ -36,6 +34,10 @@ public class BinChatManager extends ChannelInitializer<Channel> {
         }
     }
 
+    public void kickPlayer(String name, String reason) {
+
+    }
+
     public void sendToAll(DefinedPacket definedPacket) {
         for (UserConnection user : this.users) {
             user.sendPacket(definedPacket);
@@ -48,6 +50,15 @@ public class BinChatManager extends ChannelInitializer<Channel> {
 
     public void removeClient(UserConnection userConnection) {
         this.users.remove(userConnection);
+    }
+
+    public void removeClient(String name) {
+        for (UserConnection user : this.users) {
+            if (user.getName().equalsIgnoreCase(name)) {
+                this.users.remove(user);
+                return;
+            }
+        }
     }
 
     public void clientConnected(UserConnection userConnection) {

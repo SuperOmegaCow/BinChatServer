@@ -18,12 +18,12 @@ public class PasswordResponse extends DefinedPacket {
 
     @Override
     public void read(ByteBuf buf) {
-
+        this.password = readString(buf);
     }
 
     @Override
     public void write(ByteBuf buf) {
-
+        writeString(this.password, buf);
     }
 
     @Override

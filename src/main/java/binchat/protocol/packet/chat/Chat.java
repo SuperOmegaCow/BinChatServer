@@ -18,12 +18,12 @@ public class Chat extends DefinedPacket {
 
     @Override
     public void read(ByteBuf buf) {
-
+        this.message = readString(buf);
     }
 
     @Override
     public void write(ByteBuf buf) {
-
+        writeString(this.message, buf);
     }
 
     @Override
